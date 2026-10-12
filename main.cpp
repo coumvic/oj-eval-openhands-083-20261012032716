@@ -33,13 +33,14 @@ Node* createCircularList(int n) {
 Node* deleteNode(Node* prev, Node* toDelete) {
     if (prev == nullptr || toDelete == nullptr) return nullptr;
     
-    prev->next = toDelete->next;
+    Node* nextNode = toDelete->next;
+    prev->next = nextNode;
     int value = toDelete->data;
     delete toDelete;
     
     std::cout << value << std::endl;
     
-    return prev->next;
+    return nextNode;
 }
 
 // Function to solve the Josephus problem
@@ -49,15 +50,15 @@ void solveJosephus(int n, int m) {
     
     if (head == nullptr) return;
     
+    // Set up initial pointers
+    // Start with current at head (node 1)
     Node* current = head;
-    Node* prev = nullptr;
     
-    // Find the last node to set up the initial prev pointer
-    while (current->next != head) {
-        current = current->next;
+    // Find the node before head (the last node)
+    Node* prev = head;
+    while (prev->next != head) {
+        prev = prev->next;
     }
-    prev = current;
-    current = head;
     
     // Process n-1 eliminations
     for (int i = 0; i < n - 1; i++) {
@@ -73,8 +74,6 @@ void solveJosephus(int n, int m) {
     
     // Print the last remaining node
     std::cout << current->data << std::endl;
-    
-    // Clean up the last node
 }
 
 int main() {
