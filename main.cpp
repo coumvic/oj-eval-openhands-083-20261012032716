@@ -28,21 +28,6 @@ Node* createCircularList(int n) {
     return head;
 }
 
-// Function to delete a node from the circular linked list
-// Returns the next node after the deleted one
-Node* deleteNode(Node* prev, Node* toDelete) {
-    if (prev == nullptr || toDelete == nullptr) return nullptr;
-    
-    Node* nextNode = toDelete->next;
-    prev->next = nextNode;
-    int value = toDelete->data;
-    delete toDelete;
-    
-    std::cout << value << std::endl;
-    
-    return nextNode;
-}
-
 // Function to solve the Josephus problem
 void solveJosephus(int n, int m) {
     // Create a circular linked list with n nodes
@@ -50,30 +35,39 @@ void solveJosephus(int n, int m) {
     
     if (head == nullptr) return;
     
-    // Set up initial pointers
-    // Start with current at head (node 1)
     Node* current = head;
+    Node* prev = nullptr;
     
-    // Find the node before head (the last node)
-    Node* prev = head;
-    while (prev->next != head) {
-        prev = prev->next;
+    // Find the last node
+    while (current->next != head) {
+        current = current->next;
     }
+    prev = current;  // prev points to the last node
+    current = head;  // current points to the first node
     
     // Process n-1 eliminations
     for (int i = 0; i < n - 1; i++) {
-        // Move m-1 steps forward (since we're already on the first node to count)
+        // Move m-1 steps forward
         for (int j = 0; j < m - 1; j++) {
             prev = current;
             current = current->next;
         }
         
         // Delete the current node
-        current = deleteNode(prev, current);
+        Node* nextNode = current->next;
+        prev->next = nextNode;
+        std::cout << current->data << std::endl;
+        delete current;
+        
+        // Update current for next iteration
+        current = nextNode;
     }
     
     // Print the last remaining node
     std::cout << current->data << std::endl;
+    
+    // Clean up the last node
+    delete current;
 }
 
 int main() {
