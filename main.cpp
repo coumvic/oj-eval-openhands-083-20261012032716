@@ -75,7 +75,6 @@ void solveJosephus(int n, int m) {
     std::cout << current->data << std::endl;
     
     // Clean up the last node
-    delete current;
 }
 
 int main() {
