@@ -26,13 +26,13 @@ int main() {
     // Make it circular by connecting the last node to the head
     current->next = head;
     
-    // Start from the node before the first node to be counted
-    Node* prev = current;  // This is the last node, which is before the head
-    current = head;        // This is the first node
+    // Start from the node before the first node (the last node)
+    Node* prev = current;
+    current = head;
     
     // Process n-1 eliminations
     for (int i = 0; i < n - 1; i++) {
-        // Move m-1 steps forward
+        // Move m-1 steps forward (since we're already on the first node to count)
         for (int j = 0; j < m - 1; j++) {
             prev = current;
             current = current->next;
