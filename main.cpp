@@ -8,10 +8,11 @@ struct Node {
     Node(int value) : data(value), next(nullptr) {}
 };
 
-// Function to create a circular linked list with n nodes
-Node* createCircularList(int n) {
-    if (n == 0) return nullptr;
+int main() {
+    int n, m;
+    std::cin >> n >> m;
     
+    // Create a circular linked list with n nodes
     Node* head = new Node(1);
     Node* current = head;
     
@@ -25,25 +26,15 @@ Node* createCircularList(int n) {
     // Make it circular by connecting the last node to the head
     current->next = head;
     
-    return head;
-}
-
-// Function to solve the Josephus problem
-void solveJosephus(int n, int m) {
-    // Create a circular linked list with n nodes
-    Node* head = createCircularList(n);
-    
-    if (head == nullptr) return;
-    
-    Node* current = head;
+    // Start from the first node
+    current = head;
     Node* prev = nullptr;
     
-    // Find the last node
-    while (current->next != head) {
-        current = current->next;
+    // Find the last node to set up the initial prev pointer
+    prev = head;
+    while (prev->next != head) {
+        prev = prev->next;
     }
-    prev = current;  // prev points to the last node
-    current = head;  // current points to the first node
     
     // Process n-1 eliminations
     for (int i = 0; i < n - 1; i++) {
@@ -53,14 +44,14 @@ void solveJosephus(int n, int m) {
             current = current->next;
         }
         
-        // Delete the current node
-        Node* nextNode = current->next;
-        prev->next = nextNode;
+        // Print and delete the current node
         std::cout << current->data << std::endl;
-        delete current;
         
-        // Update current for next iteration
-        current = nextNode;
+        // Remove the current node from the list
+        prev->next = current->next;
+        Node* temp = current;
+        current = current->next;
+        delete temp;
     }
     
     // Print the last remaining node
@@ -68,13 +59,6 @@ void solveJosephus(int n, int m) {
     
     // Clean up the last node
     delete current;
-}
-
-int main() {
-    int n, m;
-    std::cin >> n >> m;
-    
-    solveJosephus(n, m);
     
     return 0;
 }
