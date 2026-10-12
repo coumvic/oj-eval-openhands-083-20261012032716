@@ -26,15 +26,9 @@ int main() {
     // Make it circular by connecting the last node to the head
     current->next = head;
     
-    // Start from the first node
-    current = head;
-    Node* prev = nullptr;
-    
-    // Find the last node to set up the initial prev pointer
-    prev = head;
-    while (prev->next != head) {
-        prev = prev->next;
-    }
+    // Start from the node before the first node to be counted
+    Node* prev = current;  // This is the last node, which is before the head
+    current = head;        // This is the first node
     
     // Process n-1 eliminations
     for (int i = 0; i < n - 1; i++) {
